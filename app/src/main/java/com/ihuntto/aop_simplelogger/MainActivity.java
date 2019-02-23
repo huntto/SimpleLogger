@@ -6,45 +6,45 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity {
 
     @Override
+    @Logcat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onRestart() {
         super.onRestart();
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onStart() {
         super.onStart();
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onResume() {
         super.onResume();
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onPause() {
         super.onPause();
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onStop() {
         super.onStop();
-        SimpleLog.d();
     }
 
     @Override
+    @Logcat
     protected void onDestroy() {
         super.onDestroy();
-        SimpleLog.d();
     }
 }
