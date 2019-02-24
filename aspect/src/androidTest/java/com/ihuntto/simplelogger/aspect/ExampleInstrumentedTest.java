@@ -1,4 +1,4 @@
-package com.ihuntto.aop_simplelogger;
+package com.ihuntto.simplelogger.aspect;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ihuntto.aop_simplelogger", appContext.getPackageName());
+        assertEquals("com.ihuntto.simplelogger.aspect.test", appContext.getPackageName());
     }
 }

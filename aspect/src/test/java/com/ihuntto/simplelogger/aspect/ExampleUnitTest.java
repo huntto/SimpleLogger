@@ -1,4 +1,4 @@
-package com.ihuntto.aop_simplelogger;
+package com.ihuntto.simplelogger.aspect;
 
 import org.junit.Test;
 

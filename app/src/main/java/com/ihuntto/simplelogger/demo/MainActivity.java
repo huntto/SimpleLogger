@@ -1,49 +1,52 @@
-package com.ihuntto.aop_simplelogger;
+package com.ihuntto.simplelogger.demo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.ihuntto.simplelogger.annotations.DebugTrace;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onRestart() {
         super.onRestart();
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onStart() {
         super.onStart();
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onResume() {
         super.onResume();
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onPause() {
         super.onPause();
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onStop() {
         super.onStop();
     }
 
     @Override
-    @Logcat
+    @DebugTrace
     protected void onDestroy() {
         super.onDestroy();
     }

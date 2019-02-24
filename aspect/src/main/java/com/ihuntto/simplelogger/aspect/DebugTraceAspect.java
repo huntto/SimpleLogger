@@ -1,4 +1,4 @@
-package com.ihuntto.aop_simplelogger;
+package com.ihuntto.simplelogger.aspect;
 
 import android.util.Log;
 
@@ -9,9 +9,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
 @Aspect
-public class LogcatAspect {
+public class DebugTraceAspect {
     private static final String POINTCUT_METHOD =
-            "execution(@com.ihuntto.aop_simplelogger.Logcat * *(..))";
+            "execution(@com.ihuntto.simplelogger.annotations.DebugTrace * *(..))";
 
     @Pointcut(POINTCUT_METHOD)
     public void pointcut() {
@@ -24,6 +24,7 @@ public class LogcatAspect {
         String methodName = methodSignature.getName();
 
         Log.d(className, methodName);
+
         joinPoint.proceed();
     }
 }
