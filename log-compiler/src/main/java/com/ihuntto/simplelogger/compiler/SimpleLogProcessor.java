@@ -2,7 +2,6 @@ package com.ihuntto.simplelogger.compiler;
 
 import com.google.auto.service.AutoService;
 import com.ihuntto.simplelogger.annotations.SimpleLog;
-import com.sun.source.tree.Tree;
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
@@ -63,14 +62,12 @@ public class SimpleLogProcessor extends AbstractProcessor {
                     messager.printMessage(Diagnostic.Kind.NOTE, "handle element: " + each.getSimpleName());
                     JCTree jcTree = (JCTree) trees.getTree(each);
                     if (jcTree != null) {
-                        if (each.getKind() == ElementKind.CLASS) {
-                            visitor.setHandlePolicy(SimpleLogTranslator.HandlePolicy.NOT_ANNOTATED_METHOD);
-                            visitor.setTag(each.getSimpleName().toString());
-                        } else {
-                            visitor.setHandlePolicy(SimpleLogTranslator.HandlePolicy.ANNOTATED_METHOD);
-                            visitor.setTag(each.getEnclosingElement().getSimpleName().toString());
-                        }
+                        visitor.setTag(each.getKind() == ElementKind.CLASS ?
+                                each.getSimpleName().toString() :
+                                each.getEnclosingElement().getSimpleName().toString());
                         jcTree.accept(visitor);
+                    } else {
+                        messager.printMessage(Diagnostic.Kind.NOTE, ">> jctree is null.");
                     }
                 }
             }

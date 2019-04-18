@@ -1,6 +1,5 @@
 package com.ihuntto.simplelogger.compiler;
 
-import com.ihuntto.simplelogger.annotations.SimpleLog;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
@@ -17,7 +16,7 @@ class SimpleLogTranslator extends TreeTranslator {
     private TreeMaker mTreeMaker;
     private Name.Table mNames;
     private Messager mMessager;
-    private HandlePolicy mHandlePolicy = HandlePolicy.ANNOTATED_METHOD;
+    private String mTag;
     private JCTree.JCExpression mTagExpression;
 
     SimpleLogTranslator(TreeMaker treeMaker, Name.Table names, Messager messager) {
@@ -26,11 +25,8 @@ class SimpleLogTranslator extends TreeTranslator {
         mMessager = messager;
     }
 
-    void setHandlePolicy(@Nonnull HandlePolicy handlePolicy) {
-        mHandlePolicy = handlePolicy;
-    }
-
     void setTag(@Nonnull String tag) {
+        mTag = tag;
         mTagExpression = mTreeMaker.Literal(tag);
     }
 
@@ -38,11 +34,6 @@ class SimpleLogTranslator extends TreeTranslator {
     public void visitMethodDef(JCTree.JCMethodDecl jcMethodDecl) {
         super.visitMethodDef(jcMethodDecl);
         note("visit:" + jcMethodDecl.getName());
-
-        if (!needHandleMethod(jcMethodDecl)) {
-            note("not handle method: " + jcMethodDecl.name);
-            return;
-        }
 
         JCTree.JCStatement logStatement = generateLogStatement(jcMethodDecl);
 
@@ -135,29 +126,6 @@ class SimpleLogTranslator extends TreeTranslator {
         return mTreeMaker.Binary(JCTree.Tag.PLUS, msgExpression, mTreeMaker.Literal(")"));
     }
 
-    private boolean needHandleMethod(JCTree.JCMethodDecl jcMethodDecl) {
-        if (isAnnotatedBySimpleLog(jcMethodDecl)) {
-            return mHandlePolicy != HandlePolicy.NOT_ANNOTATED_METHOD;
-        } else {
-            return mHandlePolicy != HandlePolicy.ANNOTATED_METHOD;
-        }
-    }
-
-    private boolean isAnnotatedBySimpleLog(JCTree.JCMethodDecl jcMethodDecl) {
-        for (JCTree.JCAnnotation jcAnnotation : jcMethodDecl.getModifiers().annotations) {
-            if (jcAnnotation.attribute == null || jcAnnotation.attribute.type == null) {
-                note(jcMethodDecl.name + ": "
-                        + jcAnnotation.annotationType.toString()
-                        + ": attribute or attribute.type is null");
-                continue;
-            }
-            if (jcAnnotation.attribute.type.toString().equals(SimpleLog.class.getCanonicalName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void visitReturn(JCTree.JCReturn jcReturn) {
         super.visitReturn(jcReturn);
@@ -165,11 +133,7 @@ class SimpleLogTranslator extends TreeTranslator {
     }
 
     private void note(String msg) {
-        mMessager.printMessage(Diagnostic.Kind.NOTE, msg);
+        mMessager.printMessage(Diagnostic.Kind.NOTE, mTag + ": " + msg);
     }
 
-    public enum HandlePolicy {
-        ANNOTATED_METHOD,
-        NOT_ANNOTATED_METHOD
-    }
 }
