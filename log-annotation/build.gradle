@@ -11,8 +11,10 @@ dependencies {
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
 def siteUrl = 'https://github.com/huntto/SimpleLogger'
 def gitUrl = 'https://github.com/huntto/SimpleLogger.git'
+
 group = "com.ihuntto"
 
 install {
@@ -20,12 +22,12 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'Simple Logger(Annotation class) for Android'
+                name 'Simple Logger Annotations for Android'
                 url siteUrl
                 licenses {
                     license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name 'MIT License'
+                        url 'https://mit-license.org/'
                     }
                 }
                 developers {
@@ -67,11 +69,11 @@ bintray {
     key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
     configurations = ['archives']
     pkg {
-        repo = "simplelogger-annotations"
-        name = "simplelogger-annotations"
+        repo = "log-annotation"
+        name = "log-annotation"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
+        licenses = ["MIT"]
         publish = true
     }
 }

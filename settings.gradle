@@ -1,5 +1,3 @@
 include ':app',
-        ':simplelogger-annotations',
-        ':simplelogger-aspect',
-        ':log-annotations',
+        ':log-annotation',
         ':log-compiler'

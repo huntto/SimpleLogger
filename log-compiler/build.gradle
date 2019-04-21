@@ -1,11 +1,82 @@
 apply plugin: 'java-library'
 
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "1.0.1"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':log-annotations')
+    implementation 'com.ihuntto:log-annotation:1.0.1'
     implementation 'com.google.auto.service:auto-service:1.0-rc5'
     implementation files(org.gradle.internal.jvm.Jvm.current().toolsJar)
 }
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
+def siteUrl = 'https://github.com/huntto/SimpleLogger'
+def gitUrl = 'https://github.com/huntto/SimpleLogger.git'
+
+group = "com.ihuntto"
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'Simple Logger Complier for Android'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://mit-license.org/'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'huntto'
+                        name 'huntto'
+                        email 'huntto1990@icloud.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+artifacts {
+    // archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+boolean isHasFile = false
+if (project.rootProject.file('local.properties') != null){
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+bintray {
+    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray.user")
+    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "log-compiler"
+        name = "log-compiler"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+    }
+}

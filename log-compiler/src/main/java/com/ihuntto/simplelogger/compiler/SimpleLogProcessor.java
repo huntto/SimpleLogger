@@ -11,7 +11,7 @@
 package com.ihuntto.simplelogger.compiler;
 
 import com.google.auto.service.AutoService;
-import com.ihuntto.simplelogger.annotations.SimpleLog;
+import com.ihuntto.simplelogger.annotation.SimpleLog;
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
