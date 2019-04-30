@@ -6,22 +6,24 @@ import android.view.View;
 
 import com.ihuntto.simplelogger.annotation.SimpleLog;
 
-
 @SimpleLog
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    @SimpleLog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setOnClickListener(new View.OnClickListener() {
             @Override
-            @SimpleLog
             public void onClick(View v) {
 
             }
         });
+        log(this.getClass(), 0);
+    }
+
+    private void log(Class clazz, int a) {
+        System.out.print(clazz);
     }
 
     @Override

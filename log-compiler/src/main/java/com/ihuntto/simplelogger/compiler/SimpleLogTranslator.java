@@ -65,6 +65,8 @@ class SimpleLogTranslator extends TreeTranslator {
                 statements.append(logStatement);
                 statements.append(firstStatement);
             }
+        } else {
+            statements.add(logStatement);
         }
         for (int i = 1; i < methodStatements.size(); i++) {
             statements.append(jcMethodDecl.getBody().getStatements().get(i));
@@ -134,12 +136,6 @@ class SimpleLogTranslator extends TreeTranslator {
             }
         }
         return mTreeMaker.Binary(JCTree.Tag.PLUS, msgExpression, mTreeMaker.Literal(")"));
-    }
-
-    @Override
-    public void visitReturn(JCTree.JCReturn jcReturn) {
-        super.visitReturn(jcReturn);
-        System.out.println(jcReturn.expr.toString());
     }
 
     private void note(String msg) {

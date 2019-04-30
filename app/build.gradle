@@ -26,6 +26,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.ihuntto:log-annotation:1.0.1'
-    annotationProcessor 'com.ihuntto:log-compiler:1.0.1'
+    implementation project(':log-annotation')
+    annotationProcessor project(':log-compiler')
 }

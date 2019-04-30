@@ -68,7 +68,7 @@ public class SimpleLogProcessor extends AbstractProcessor {
             Set<? extends Element> elements =
                     roundEnv.getElementsAnnotatedWith(SimpleLog.class);
             for (Element each : elements) {
-                if (each.getKind() == ElementKind.CLASS || each.getKind() == ElementKind.METHOD) {
+                if (each.getKind() == ElementKind.CLASS) {
                     messager.printMessage(Diagnostic.Kind.NOTE, "handle element: " + each.getSimpleName());
                     JCTree jcTree = (JCTree) trees.getTree(each);
                     if (jcTree != null) {
